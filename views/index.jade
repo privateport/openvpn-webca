@@ -1,0 +1,46 @@
+extends layout
+
+block content
+
+    h1#title= title
+    h2= "Remote Access Administration"
+
+    .actionSection#init
+        input(type="password", id='pw1', placeholder="New Password", oninput="checkpw()")
+        </br>
+        input(type="password", id='pw2', placeholder="Retype Password", oninput="checkpw()")
+        .actionButton#initButtonDiv
+            a#initButton.button(onclick='init()', href='#')
+                span Initialize
+            .warning Warning, this may take from 10mins to 2 hours depending on your hardware.  You will only need to do this once.
+
+    .actionSection#busyEnc
+        .actionButton
+            .loader
+            .warning Please be patient and do not turn off whilst we create large encryption keys for your security.
+
+    .actionSection#busy
+        .actionButton
+            .loader
+
+    .actionSection#genClient
+        p Generate new Certificate to allow access for your device:
+        p.inputDesc Device Name:
+            input(type="text", id='commonname', class='inputField', placeholder="Device Name: ex: Laptop")
+        p.inputDesc#passwordDesc CA Password:
+            input(type="password", id='capassword', class='inputField', placeholder="Enter Password")
+        .actionButton#genButtonDiv
+            a#genButton.button(onclick='genovpn()', href='#')
+                span Generate
+
+    .actionSection#complete
+        p Success!  Please check your downloads for your OVPN Configuration file.
+        p Have you installed OVPN yet?
+        a(href="http://build.openvpn.net/downloads/releases/latest/openvpn-install-latest-stable-x86_64.exe") OVPN Windows Latest Installer
+
+    .actionSection#showClients
+        p Download OVPN Config
+        #clientLinks
+        .actionButton#showGenButtonDiv
+            a#showGenButton.button(onclick='showGenNewClientScreen()', href='#')
+                span New Device

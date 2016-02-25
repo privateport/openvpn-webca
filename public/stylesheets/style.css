@@ -1,0 +1,70 @@
+@import url(http://fonts.googleapis.com/css?family=Nunito:300);
+
+h1, h2{
+    color: #555;
+    text-align: center;
+}
+
+a    { text-decoration: none; }
+p    { text-align: center; }
+sup  { font-size: 36px; font-weight: 100; line-height: 55px; }
+
+body {
+    background: #e6edf4;
+    color: #555;
+    padding: 10px;
+    font-family: "Nunito", sans-serif; font-size: 24px;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.actionSection {
+    text-align: center;
+    margin-top: 2em;
+    position: relative;
+    height: 7em;
+    display: none;
+    /* for debug */
+    /*
+    background: white;
+    color: darkblue;
+    border: 5px;
+    border: solid;
+    */
+}
+
+.warning {
+    color: red;
+    text-align: center;
+    position: absolute;
+    margin-top: 5em;
+    width: 100%;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#busy {
+
+}
+
+#initButton {
+
+}
+
+.inputField {
+    margin-left: 10px;
+}
+
+.inputDesc {
+    font-size: 16px;
+}
+
+.displayData {
+    font-size: 16px;
+}
+
+.actionButton {
+    position: relative;
+}
