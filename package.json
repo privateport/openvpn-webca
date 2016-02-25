@@ -16,6 +16,6 @@
     "helmet": "",
     "express-validator": "",
     "async": "",
-    "node-scrypt": "6.0.1"
+    "scrypt": "6.0.1"
   }
 }
