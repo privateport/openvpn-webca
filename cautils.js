@@ -15,6 +15,7 @@ var casslfiles = ['ca-sign.cnf','DOMAIN.txt','ca.cnf','ca.key','ca.crt'];
 
 var tmppwpath = "/tmp/pw.txt";
 var caconfigdir = "/persistant/openssl";
+var openvpnssldir = "/mnt/securefwd-openvpn.openssl"
 
 //Chaining the ASync Calls (Async Heaven)
 //Check to see if the files are already created on the fs to set the state.
@@ -92,7 +93,7 @@ function init(capassword, callback) {
         }else {
 
             console.log('sdcsdcsdcsdc');
-            var cmd = '/opt/config.sh -i -d kisspi.com --caconfigdir=' + caconfigdir + ' --outputconfigdir=/persistant/openvpn-server/etc/openssl';
+            var cmd = '/opt/config.sh -i -d kisspi.com --caconfigdir=' + caconfigdir + ' --outputconfigdir=' + openvpnssldir;
 
             exec(cmd, function (error, stdout, stderr) {
                 mystatus.status = 'idle';
