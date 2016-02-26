@@ -164,7 +164,9 @@ function createClient(name, capassword, callback){
 //Generate the VPN Configuration for the Client
 function genovpnConfig(name, callback){
     var cmd = 'build-openvpn-config -n ' + name + ' --configdir=' + caconfigdir;
-    exec(cmd, function(err, stdout, code) {
+    exec(cmd, function(err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
         if (err instanceof Error) {
             //throw err;
             mystatus.status = 'idle';
