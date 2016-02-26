@@ -145,9 +145,15 @@ function createClient(name, capassword, callback){
                     //console.log('Exit Code: ' + process.exit(code));
                     console.log('createClientOVPN: openssl command completed.');
                     mystatus.status = 'idle';
-                    genovpnConfig(name, function(){
-                        removepw();
-                        callback();
+                    genovpnConfig(name, function(err){
+                        if (err instanceof Error) {
+                            console.log('Error with genovpnconfig');
+                            removepw();
+                            callback(err);
+                        }else {
+                            removepw();
+                            callback();
+                        }
                     });
                 }
             });
@@ -157,7 +163,7 @@ function createClient(name, capassword, callback){
 
 //Generate the VPN Configuration for the Client
 function genovpnConfig(name, callback){
-    var cmd = 'buildOVPNClientConfig -n ' + name + ' --configdir=' + caconfigdir;
+    var cmd = 'build-openvpn-config -n ' + name + ' --configdir=' + caconfigdir;
     exec(cmd, function(err, stdout, code) {
         if (err instanceof Error) {
             //throw err;
