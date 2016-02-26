@@ -100,6 +100,9 @@ function init(capassword, callback) {
                 mystatus.init = true;
                 console.log(stdout);
                 console.log(stderr);
+                if (error) {
+                    console.log('There was an error when doing init.')
+                }
                 removepw();
                 callback();
             });
