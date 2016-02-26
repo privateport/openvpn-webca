@@ -22,8 +22,6 @@ router.post('/init', function(req, res, next) {
     var errors = req.validationErrors();
     if (errors) return next(util.inspect(errors));
 
-    console.log('CAPASSWORD: ' + capassword);
-
     cautils.init(capassword, function(err){
         if (err) {
             console.log ('Error storing pw to disk');
@@ -32,8 +30,8 @@ router.post('/init', function(req, res, next) {
 
         }
     });
-    console.log('init finished');
-    res.json({response: 'OK'});
+
+    res.json({response: 'Init Initiated'});
 });
 
 // Create Client Certifictate

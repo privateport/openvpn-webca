@@ -99,6 +99,7 @@ function init(capassword, callback) {
                 mystatus.status = 'idle';
                 mystatus.init = true;
                 console.log(stdout);
+                console.log(stderr);
                 removepw();
                 callback();
             });
