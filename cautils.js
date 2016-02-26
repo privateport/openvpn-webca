@@ -163,7 +163,7 @@ function createClient(name, capassword, callback){
 
 //Generate the VPN Configuration for the Client
 function genovpnConfig(name, callback){
-    var cmd = 'getOVPNClientConfig -n ' + name + ' --configdir=' + caconfigdir;
+    var cmd = 'getOVPNClientConfig -n ' + name + ' --configpath=' + caconfigdir;
     exec(cmd, function(err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
