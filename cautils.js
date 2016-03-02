@@ -14,8 +14,8 @@ var serversslfiles = [ 'ca.crt', 'dh2048.pem', 'server.cnf', 'server.crt', 'serv
 var casslfiles = ['ca-sign.cnf','DOMAIN.txt','ca.cnf','ca.key','ca.crt'];
 
 var tmppwpath = "/tmp/pw.txt";
-var caconfigdir = "/persistant/openssl";
-var openvpnssldir = "/mnt/securefwd-openvpn.openssl"
+var caconfigpath = "/persistant/openssl";
+var openvpnsslpath = "/mnt/securefwd-openvpn.openssl"
 
 var pphostname = fs.readFileSync('/etc/pphostname', 'utf8');
 var ppeasyname = fs.readFileSync('/etc/ppeasyname', 'utf8');
@@ -26,7 +26,7 @@ var ppeasynamefqdn = ppeasyname + '.privateport.io';
 var cafilesmissing = false;
 var serverfilesmissing = false;
 async.each(serversslfiles,function(filename,callback){
-    fs.exists(caconfigdir+'/server/'+filename,function(exists){
+    fs.exists(caconfigpath+'/server/'+filename,function(exists){
         if(!exists){
             serverfilesmissing=true;
             callback();
@@ -36,7 +36,7 @@ async.each(serversslfiles,function(filename,callback){
     });
 },function(){
     async.each(casslfiles,function(filename,callback){
-        fs.exists(caconfigdir+'/ca/'+filename,function(exists){
+        fs.exists(caconfigpath+'/ca/'+filename,function(exists){
             if(!exists){
                 cafilesmissing=true;
                 callback();
@@ -96,7 +96,7 @@ function init(capassword, callback) {
             callback(err);
         }else {
 
-            var cmd = '/opt/config.sh -i -d ' + ppeasynamefqdn + ' --caconfigdir=' + caconfigdir + ' --outputconfigdir=' + openvpnssldir;
+            var cmd = '/opt/config.sh -i -d ' + ppeasynamefqdn + ' --caconfigpath=' + caconfigpath + ' --outputconfigpath=' + openvpnsslpath;
 
             exec(cmd, function (error, stdout, stderr) {
                 mystatus.status = 'idle';
@@ -135,7 +135,7 @@ function createClient(name, capassword, callback){
             callback(err);
         }else{
            console.log('Creating Client');
-            var cmd = 'createClientCert -n ' + name + ' -c ' + caconfigdir;
+            var cmd = 'createClientCert -n ' + name + ' -c ' + caconfigpath;
 
             exec(cmd, function(err, stdout, code) {
                 //console.log(stdout);
@@ -166,7 +166,7 @@ function createClient(name, capassword, callback){
 
 //Generate the VPN Configuration for the Client
 function genovpnConfig(name, callback){
-    var cmd = 'getOVPNClientConfig -n ' + name + ' --configpath=' + caconfigdir;
+    var cmd = 'getOVPNClientConfig -n ' + name + ' --configpath=' + caconfigpath;
     exec(cmd, function(err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
@@ -194,9 +194,9 @@ function showClients(callback) {
         });
     }
 
-    var dirs=getDirectories(caconfigdir);
+    var dirs=getDirectories(caconfigpath);
 
-    // This code sucks, no time to figure out how to DRY it.  Suggestions/fix's welcome!
+    // TODO: This code sucks, no time to figure out how to DRY it.  Suggestions/fix's welcome!
     var i = dirs.indexOf("server");
     if(i != -1) {
         dirs.splice(i, 1);
