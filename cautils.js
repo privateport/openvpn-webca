@@ -17,6 +17,10 @@ var tmppwpath = "/tmp/pw.txt";
 var caconfigdir = "/persistant/openssl";
 var openvpnssldir = "/mnt/securefwd-openvpn.openssl"
 
+var pphostname = fs.readFileSync('/etc/pphostname', 'utf8');
+var ppeasyname = fs.readFileSync('/etc/ppeasy', 'utf8');
+var ppeasynamefqdn = ppeasyname + '.privateport.io';
+
 //Chaining the ASync Calls (Async Heaven)
 //Check to see if the files are already created on the fs to set the state.
 var cafilesmissing = false;
@@ -51,7 +55,7 @@ async.each(serversslfiles,function(filename,callback){
 //This stores the password to disk
 function storepw(pw, callback){
     var key = new Buffer(pw);
-    var salt = new Buffer("we need to change this");
+    var salt = new Buffer(pphostname);
 
 //Synchronous
     var scryptpw = scrypt.hashSync(key,{"N":16384,"r":8,"p":1},64,salt);
@@ -92,8 +96,7 @@ function init(capassword, callback) {
             callback(err);
         }else {
 
-            console.log('sdcsdcsdcsdc');
-            var cmd = '/opt/config.sh -i -d kisspi.com --caconfigdir=' + caconfigdir + ' --outputconfigdir=' + openvpnssldir;
+            var cmd = '/opt/config.sh -i -d ' + ppeasynamefqdn + ' --caconfigdir=' + caconfigdir + ' --outputconfigdir=' + openvpnssldir;
 
             exec(cmd, function (error, stdout, stderr) {
                 mystatus.status = 'idle';
