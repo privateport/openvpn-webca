@@ -21,6 +21,7 @@ var pphostname = fs.readFileSync('/etc/pphostname', 'utf8');
 var ppeasyname = fs.readFileSync('/etc/ppeasyname', 'utf8');
 var ppeasynamefqdn = ppeasyname + '.privateport.io';
 
+
 //Chaining the ASync Calls (Async Heaven)
 //Check to see if the files are already created on the fs to set the state.
 var cafilesmissing = false;
@@ -96,8 +97,8 @@ function init(capassword, callback) {
             callback(err);
         }else {
 
-            var cmd = '/opt/config.sh -i -d ' + ppeasynamefqdn + ' --caconfigpath=' + caconfigpath + ' --outputconfigpath=' + openvpnsslpath;
-
+            var cmd = '/opt/config.sh -i -d ' + ppeasynamefqdn + ' --caconfigpath ' + caconfigpath + ' --outputconfigpath ' + openvpnsslpath;
+            console.log('CMD: ' + cmd);
             exec(cmd, function (error, stdout, stderr) {
                 mystatus.status = 'idle';
                 mystatus.init = true;
