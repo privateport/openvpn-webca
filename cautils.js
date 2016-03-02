@@ -18,7 +18,7 @@ var caconfigdir = "/persistant/openssl";
 var openvpnssldir = "/mnt/securefwd-openvpn.openssl"
 
 var pphostname = fs.readFileSync('/etc/pphostname', 'utf8');
-var ppeasyname = fs.readFileSync('/etc/ppeasy', 'utf8');
+var ppeasyname = fs.readFileSync('/etc/ppeasyname', 'utf8');
 var ppeasynamefqdn = ppeasyname + '.privateport.io';
 
 //Chaining the ASync Calls (Async Heaven)
